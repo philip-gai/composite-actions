@@ -2,6 +2,11 @@ name: upgrade-gh-cli test
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    paths:
+      - ".github/workflows/composite/upgrade-gh-cli"
 
 jobs:
   upgrade-gh-cli-test:
@@ -14,5 +19,11 @@ jobs:
           repository: philip-gai/composite-actions
           path: composite-actions
           ref: ${{ github.ref }}
-      - name: Upgrade gh cli
+      - name: Upgrade gh cli and assert-upgraded
         uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
+        with:
+          assert-upgraded: true
+      - name: Upgrade gh cli skip assert-upgraded
+        uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
+        with:
+          assert-upgraded: false
