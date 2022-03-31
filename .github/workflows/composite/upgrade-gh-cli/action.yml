@@ -1,0 +1,37 @@
+name: "Upgrade gh cli to latest"
+description: "Upgrades the gh cli to the latest version"
+
+inputs:
+  assert-upgraded:
+    description: "Assert that the version was updated"
+    required: true
+    default: 'true'
+
+env:
+  assert_upgraded: ${{ inputs.assert-upgraded }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download latest gh cli package
+      shell: bash
+      run: |
+        # Instructions: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt 
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    - name: Update Advanced Package Tool (APT)
+      shell: bash
+      run: sudo apt update
+    - name: Upgrade gh cli
+      shell: bash
+      run: |
+        oldVersion=$(gh --version | grep "gh version")
+        echo $oldVersion
+        sudo apt install gh
+        newVersion=$(gh --version | grep "gh version")
+        echo $newVersion
+
+        if [ "$assert_upgraded" = "true" ]; then
+          # Fails if the newVersion == oldVersion
+          echo $newVersion | grep -v -q "$oldVersion"
+        fi
