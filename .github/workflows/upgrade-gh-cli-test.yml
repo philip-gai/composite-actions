@@ -9,9 +9,12 @@ on:
       - ".github/workflows/composite/upgrade-gh-cli"
 
 jobs:
-  upgrade-gh-cli-test:
-    name: Use upgrade gh cli latest
-    runs-on: ubuntu-latest
+  upgrade-gh-cli-and-assert:
+    name: Upgrade gh cli and assert-upgraded
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-18.04, macos-11, macos-10.15, windows-2022, windows-2019, windows-2016]
     steps:
       - name: Checkout composite actions repository
         uses: actions/checkout@v2
@@ -20,12 +23,21 @@ jobs:
           path: composite-actions
           ref: ${{ github.ref }}
       - name: Upgrade gh cli and assert-upgraded
-        continue-on-error: true
         uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
         with:
           assert-upgraded: true
+
+  upgrade-gh-cli-and-skip-assert:
+    name: Upgrade gh cli and skip assertion
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout composite actions repository
+        uses: actions/checkout@v2
+        with:
+          repository: philip-gai/composite-actions
+          path: composite-actions
+          ref: ${{ github.ref }}
       - name: Upgrade gh cli skip assert-upgraded
-        continue-on-error: true
         uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
         with:
           assert-upgraded: false
