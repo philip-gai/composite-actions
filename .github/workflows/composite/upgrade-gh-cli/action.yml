@@ -19,17 +19,24 @@ runs:
     - name: Update Advanced Package Tool (APT)
       shell: bash
       run: sudo apt update
+    - name: Get version before upgrade
+      id: get_old_version
+      shell: bash
+      run: |
+        oldVersion=$(gh --version | grep "gh version")
+        echo $oldVersion
+        echo '::set-output name=OLD_VERSION::$oldVersion'
     - name: Upgrade gh cli
       shell: bash
       run: |
-        assert_upgraded=${{ inputs.assert-upgraded }}
-        oldVersion=$(gh --version | grep "gh version")
-        echo $oldVersion
         sudo apt install gh
+    - name: Get version after upgrade
+      shell: bash
+      run: gh --version
+    - name: Assert version upgrade
+      if: inputs.assert-upgraded == 'true'
+      run: |
+        oldVersion='${{ steps.get_old_version.outputs.OLD_VERSION }}'
         newVersion=$(gh --version | grep "gh version")
-        echo $newVersion
-
-        if [ "$assert_upgraded" = "true" ]; then
-          # Fails if the newVersion == oldVersion
-          echo $newVersion | grep -v -q "$oldVersion"
-        fi
+        # Fails if the newVersion == oldVersion
+        echo $newVersion | grep -v -q "$oldVersion"
