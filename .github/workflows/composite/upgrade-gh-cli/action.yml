@@ -35,6 +35,7 @@ runs:
       run: gh --version
     - name: Assert version upgrade
       if: inputs.assert-upgraded == 'true'
+      shell: bash
       run: |
         oldVersion='${{ steps.get_old_version.outputs.OLD_VERSION }}'
         newVersion=$(gh --version | grep "gh version")
