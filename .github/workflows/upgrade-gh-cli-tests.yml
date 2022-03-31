@@ -1,4 +1,4 @@
-name: upgrade-gh-cli test
+name: upgrade-gh-cli tests
 
 on:
   workflow_dispatch: {}
@@ -8,7 +8,7 @@ on:
       - "main"
     paths:
       - ".github/workflows/composite/upgrade-gh-cli"
-      - ".github/workflows/upgrade-gh-cli-test.yml"
+      - ".github/workflows/upgrade-gh-cli-tests.yml"
 
 jobs:
   upgrade-gh-cli-and-assert:
