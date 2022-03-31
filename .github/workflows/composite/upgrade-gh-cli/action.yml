@@ -5,7 +5,7 @@ inputs:
   assert-upgraded:
     description: "Assert that the version was updated"
     required: false
-    default: 'true'
+    default: "true"
 
 runs:
   using: "composite"
@@ -28,8 +28,7 @@ runs:
         echo '::set-output name=OLD_VERSION::$oldVersion'
     - name: Upgrade gh cli
       shell: bash
-      run: |
-        sudo apt install gh
+      run: sudo apt install gh
     - name: Get version after upgrade
       shell: bash
       run: gh --version
