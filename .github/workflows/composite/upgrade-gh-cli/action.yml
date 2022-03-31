@@ -25,7 +25,7 @@ runs:
       run: |
         oldVersion=$(gh --version | grep "gh version")
         echo $oldVersion
-        echo '::set-output name=OLD_VERSION::$oldVersion'
+        echo "::set-output name=OLD_VERSION::$oldVersion"
     - name: Upgrade gh cli
       shell: bash
       run: sudo apt install gh
