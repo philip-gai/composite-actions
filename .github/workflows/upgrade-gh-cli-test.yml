@@ -13,8 +13,8 @@ jobs:
   upgrade-gh-cli-and-assert:
     name: Upgrade gh cli and assert-upgraded
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-20.04, ubuntu-18.04]
     steps:
@@ -32,8 +32,8 @@ jobs:
   upgrade-gh-cli-and-skip-assert:
     name: Upgrade gh cli and skip assertion
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-20.04, ubuntu-18.04]
     steps:
