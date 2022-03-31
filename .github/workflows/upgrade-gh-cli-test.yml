@@ -1,0 +1,18 @@
+name: upgrade-gh-cli test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upgrade-gh-cli-test:
+    name: Use upgrade gh cli latest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout composite actions repository
+        uses: actions/checkout@v2
+        with:
+          repository: philip-gai/composite-actions
+          path: composite-actions
+          ref: ${{ github.ref }}
+      - name: Upgrade gh cli
+        uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
