@@ -7,7 +7,7 @@ on:
     branches:
       - "main"
     paths:
-      - ".github/workflows/composite/upgrade-gh-cli"
+      - "action.yml"
       - ".github/workflows/upgrade-gh-cli-tests.yml"
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
           path: composite-actions
           ref: ${{ github.ref }}
       - name: Upgrade gh cli and assert-upgraded
-        uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
+        uses: ./composite-actions
         with:
           assert-upgraded: true
 
@@ -45,6 +45,6 @@ jobs:
           path: composite-actions
           ref: ${{ github.ref }}
       - name: Upgrade gh cli skip assert-upgraded
-        uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
+        uses: ./composite-actions
         with:
           assert-upgraded: false
