@@ -7,9 +7,6 @@ inputs:
     required: false
     default: 'true'
 
-env:
-  assert_upgraded: ${{ inputs.assert-upgraded }}
-
 runs:
   using: "composite"
   steps:
@@ -25,6 +22,7 @@ runs:
     - name: Upgrade gh cli
       shell: bash
       run: |
+        assert_upgraded=${{ inputs.assert-upgraded }}
         oldVersion=$(gh --version | grep "gh version")
         echo $oldVersion
         sudo apt install gh
