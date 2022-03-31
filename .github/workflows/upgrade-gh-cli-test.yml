@@ -20,10 +20,12 @@ jobs:
           path: composite-actions
           ref: ${{ github.ref }}
       - name: Upgrade gh cli and assert-upgraded
+        continue-on-error: true
         uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
         with:
           assert-upgraded: true
       - name: Upgrade gh cli skip assert-upgraded
+        continue-on-error: true
         uses: ./composite-actions/.github/workflows/composite/upgrade-gh-cli
         with:
           assert-upgraded: false
