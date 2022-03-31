@@ -4,7 +4,7 @@ description: "Upgrades the gh cli to the latest version"
 inputs:
   assert-upgraded:
     description: "Assert that the version was updated"
-    required: true
+    required: false
     default: 'true'
 
 env:
