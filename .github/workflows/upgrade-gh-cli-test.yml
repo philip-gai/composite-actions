@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04, macos-11, macos-10.15, windows-2022, windows-2019, windows-2016]
+        os: [ubuntu-20.04, ubuntu-18.04]
     steps:
       - name: Checkout composite actions repository
         uses: actions/checkout@v2
@@ -31,6 +31,9 @@ jobs:
   upgrade-gh-cli-and-skip-assert:
     name: Upgrade gh cli and skip assertion
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-18.04]
     steps:
       - name: Checkout composite actions repository
         uses: actions/checkout@v2
